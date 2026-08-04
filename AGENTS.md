@@ -36,4 +36,11 @@ Full specs:
 ## Corrections log
 (Add lines here whenever you catch the agent repeating a mistake.)
 
+- 2026-08-04: Missing Publish button in embedded Studio — do NOT chase the
+  legacy dataset ACL (`_.groups.*` grants lack `publish`/`delete`). API
+  publish succeeds despite that ACL, so it does not gate publishing. Verify
+  the document state first: if there's no draft, no Publish button appears
+  (that's normal). Publishing `drafts.siteSettings` via the data API resolved
+  the issue.
+
 

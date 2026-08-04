@@ -2,7 +2,7 @@ import React from "react";
 import Link from "next/link";
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: "primary" | "secondary" | "whatsapp" | "outline" | "terracotta";
+  variant?: "primary" | "secondary" | "whatsapp" | "outline" | "terracotta" | "cream";
   size?: "sm" | "md" | "lg";
   href?: string;
   target?: string;
@@ -44,6 +44,8 @@ export const Button: React.FC<ButtonProps> = ({
       "border border-tan text-ink hover:border-terracotta hover:text-terracotta bg-transparent",
     whatsapp:
       "bg-[#25D366] text-white hover:bg-[#20BD5A] shadow-sm hover:shadow-md font-semibold",
+    cream:
+      "bg-cream text-ink hover:bg-white hover:shadow-md active:bg-cream/90 shadow-sm",
   };
 
   const combinedClasses = `${baseStyles} ${sizeStyles[size]} ${variantStyles[variant]} ${className}`.trim();

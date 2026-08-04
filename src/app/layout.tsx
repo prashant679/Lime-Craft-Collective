@@ -23,7 +23,10 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  title: "Lime Craft Collective — Handcrafted Luxury Textures",
+  title: {
+    default: "Lime Craft Collective — Handcrafted Luxury Textures",
+    template: "%s | Lime Craft Collective",
+  },
   description:
     "Transforming raw concrete into elegant architectural statements. Premium microtopping, limewash plasterwork, and bespoke surfaces for residential and commercial spaces.",
 };
@@ -38,9 +41,17 @@ export default function RootLayout({
       lang="en"
       className={`${fraunces.variable} ${inter.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col bg-cream text-ink font-sans selection:bg-terracotta/20 selection:text-terracotta">
+      <body className="flex min-h-full flex-col bg-cream font-sans text-ink selection:bg-terracotta/20 selection:text-terracotta">
+        <a
+          href="#main"
+          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[60] focus:bg-terracotta focus:px-4 focus:py-2 focus:text-cream"
+        >
+          Skip to content
+        </a>
         <Navbar />
-        <main className="flex-1">{children}</main>
+        <main id="main" className="flex-1">
+          {children}
+        </main>
         <Footer />
       </body>
     </html>
