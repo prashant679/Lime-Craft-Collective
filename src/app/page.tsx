@@ -237,7 +237,7 @@ export default async function Home() {
         image={
           <div className="relative aspect-[4/5] overflow-hidden rounded-[4px] border border-tan/60">
             <Image
-              src="/images/pdf/about.jpg"
+              src="/images/pdf/about.jpeg"
               alt="Micro Concrete finish in progress"
               fill
               sizes="(min-width: 1024px) 50vw, 100vw"

@@ -1,5 +1,6 @@
 import React from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { FileText, Mail, MapPin, MessageCircle, Phone } from "lucide-react";
 import { NAV_LINKS, SITE } from "@/components/layout/site";
 
@@ -23,17 +24,31 @@ const InstagramIcon: React.FC<{ className?: string }> = ({ className = "h-4 w-4"
 const linkClasses =
   "inline-block py-1 text-tan/85 transition-colors hover:text-terracotta focus:outline-none focus-visible:text-cream";
 
-export const Footer: React.FC = () => {
+interface FooterProps {
+  logoUrl?: string;
+}
+
+export const Footer: React.FC<FooterProps> = ({ logoUrl }) => {
   return (
     <footer className="bg-ink font-sans text-cream">
       <div className="mx-auto max-w-7xl px-4 pb-10 pt-16 sm:px-6 md:pt-20 lg:px-8">
         <div className="grid grid-cols-1 gap-12 border-b border-tan/20 pb-12 md:grid-cols-2 lg:grid-cols-4 lg:gap-10">
           <div className="space-y-5">
             <Link href="/" className="group inline-block focus:outline-none">
-              <span className="font-serif text-2xl font-bold tracking-tight text-cream transition-colors group-hover:text-terracotta">
-                Lime Craft{" "}
-                <span className="font-normal italic text-terracotta">Collective</span>
-              </span>
+              {logoUrl ? (
+                <Image
+                  src={logoUrl}
+                  alt={SITE.name}
+                  width={196}
+                  height={48}
+                  className="h-12 w-auto object-contain transition-opacity group-hover:opacity-90"
+                />
+              ) : (
+                <span className="font-serif text-2xl font-bold tracking-tight text-cream transition-colors group-hover:text-terracotta">
+                  Lime Craft{" "}
+                  <span className="font-normal italic text-terracotta">Collective</span>
+                </span>
+              )}
             </Link>
             <p className="max-w-xs text-sm leading-relaxed text-tan/85">
               Handcrafted micro concrete and limewash finishes for residential and commercial

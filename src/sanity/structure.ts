@@ -4,7 +4,6 @@ import {
   DocumentTextIcon,
   HelpCircleIcon,
   ImageIcon,
-  SquareIcon,
 } from '@sanity/icons'
 
 export const structure: StructureResolver = (S) =>
@@ -29,11 +28,6 @@ export const structure: StructureResolver = (S) =>
         .title('Services')
         .icon(DocumentTextIcon)
         .child(S.documentTypeList('service').title('Services')),
-
-      S.listItem()
-        .title('Texture Swatches')
-        .icon(SquareIcon)
-        .child(S.documentTypeList('swatch').title('Texture Swatches')),
 
       S.listItem()
         .title('Gallery')

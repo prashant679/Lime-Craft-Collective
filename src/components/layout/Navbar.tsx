@@ -2,12 +2,17 @@
 
 import React, { useEffect, useRef, useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { ChevronDown, Menu, MessageCircle, X } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { NAV_LINKS, SITE } from "@/components/layout/site";
 
-export const Navbar: React.FC = () => {
+interface NavbarProps {
+  logoUrl?: string;
+}
+
+export const Navbar: React.FC<NavbarProps> = ({ logoUrl }) => {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [mobileServicesOpen, setMobileServicesOpen] = useState(true);
   const [servicesOpen, setServicesOpen] = useState(false);
@@ -66,13 +71,26 @@ export const Navbar: React.FC = () => {
             className="group shrink-0 focus:outline-none"
             aria-label={`${SITE.name} – Home`}
           >
-            <span className="block font-serif text-xl font-bold leading-none tracking-tight text-ink transition-colors group-hover:text-terracotta sm:text-2xl">
-              Lime Craft{" "}
-              <span className="font-normal italic text-terracotta">Collective</span>
-            </span>
-            <span className="mt-1 block text-[9px] uppercase tracking-[0.25em] text-muted sm:text-[10px]">
-              Handcrafted Textures
-            </span>
+            {logoUrl ? (
+              <Image
+                src={logoUrl}
+                alt={SITE.name}
+                width={176}
+                height={44}
+                className="h-10 w-auto object-contain transition-opacity group-hover:opacity-90"
+                priority
+              />
+            ) : (
+              <>
+                <span className="block font-serif text-xl font-bold leading-none tracking-tight text-ink transition-colors group-hover:text-terracotta sm:text-2xl">
+                  Lime Craft{" "}
+                  <span className="font-normal italic text-terracotta">Collective</span>
+                </span>
+                <span className="mt-1 block text-[9px] uppercase tracking-[0.25em] text-muted sm:text-[10px]">
+                  Handcrafted Textures
+                </span>
+              </>
+            )}
           </Link>
 
           <nav className="hidden items-center gap-8 lg:flex" aria-label="Primary">

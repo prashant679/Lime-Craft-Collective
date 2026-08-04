@@ -3,6 +3,7 @@ import { Fraunces, Inter } from "next/font/google";
 import "./globals.css";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
+import { sanityFetch } from "@/sanity/lib/live";
 
 const fraunces = Fraunces({
   variable: "--font-fraunces",
@@ -29,13 +30,36 @@ export const metadata: Metadata = {
   },
   description:
     "Transforming raw concrete into elegant architectural statements. Premium micro concrete, limewash plasterwork, and bespoke surfaces for residential and commercial spaces.",
+  icons: {
+    icon: [
+      { url: "/images/favicon-96x96.png", type: "image/png", sizes: "96x96" },
+      { url: "/images/favicon.svg", type: "image/svg+xml" },
+    ],
+    shortcut: { url: "/images/favicon.ico", type: "image/x-icon" },
+    apple: { url: "/images/apple-touch-icon.png", type: "image/png", sizes: "180x180" },
+  },
+  manifest: "/images/site.webmanifest",
+  appleWebApp: {
+    title: "Limecraft",
+  },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  let logoUrl: string | undefined;
+  try {
+    const data = await sanityFetch({
+      query: `*[_type == "siteSettings"][0]{ "logo": logo.asset->{ url } }`,
+    });
+    const settings = data.data as { logo?: { url?: string } } | null;
+    logoUrl = settings?.logo?.url;
+  } catch {
+    logoUrl = undefined;
+  }
+
   return (
     <html
       lang="en"
@@ -48,11 +72,11 @@ export default function RootLayout({
         >
           Skip to content
         </a>
-        <Navbar />
+        <Navbar logoUrl={logoUrl} />
         <main id="main" className="flex-1">
           {children}
         </main>
-        <Footer />
+        <Footer logoUrl={logoUrl} />
       </body>
     </html>
   );

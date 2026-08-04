@@ -45,7 +45,7 @@ export default function AboutPage() {
         accentTitle="Our"
         title="Story"
         subtitle="Raw concrete, elevated into quiet, handcrafted luxury."
-        image="/images/pdf/about.jpg"
+        image="/images/pdf/about.jpeg"
       />
 
       <SplitSection

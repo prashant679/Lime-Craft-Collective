@@ -136,15 +136,64 @@ export const service = defineType({
       ],
     }),
     defineField({
-      name: 'swatches',
-      title: 'Related Texture Swatches',
+      name: 'keyFeatures',
+      title: 'Key Features',
       type: 'array',
       description:
-        'The texture swatches shown on this service page. Add existing swatches from the Texture Swatches section.',
+        'Technical properties of this finish, e.g. Water-resistant, Crack-resistant, UV-resistant. Shown as a checklist.',
       of: [
         defineArrayMember({
-          type: 'reference',
-          to: [{ type: 'swatch' }],
+          type: 'string',
+          title: 'Feature',
+        }),
+      ],
+    }),
+    defineField({
+      name: 'perfectApplications',
+      title: 'Perfect Applications',
+      type: 'array',
+      description:
+        'Where this finish gets used, e.g. bathroom floors, kitchen countertops, commercial spaces. Shown as a checklist.',
+      of: [
+        defineArrayMember({
+          type: 'string',
+          title: 'Application',
+        }),
+      ],
+    }),
+    defineField({
+      name: 'processSteps',
+      title: 'Application Process',
+      type: 'array',
+      description:
+        'The step-by-step application process shown in the "Our Application Process" section on this service page. Each step is numbered automatically.',
+      of: [
+        defineArrayMember({
+          type: 'object',
+          name: 'step',
+          title: 'Step',
+          fields: [
+            defineField({
+              name: 'title',
+              title: 'Step Title',
+              type: 'string',
+              description: 'e.g. Surface Preparation',
+              validation: (rule) => rule.required(),
+            }),
+            defineField({
+              name: 'description',
+              title: 'Step Description',
+              type: 'text',
+              rows: 3,
+              description: 'One or two sentences explaining this step.',
+              validation: (rule) => rule.required(),
+            }),
+          ],
+          preview: {
+            select: {
+              title: 'title',
+            },
+          },
         }),
       ],
     }),
