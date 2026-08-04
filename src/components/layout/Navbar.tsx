@@ -59,7 +59,7 @@ export const Navbar: React.FC<NavbarProps> = ({ logoUrl }) => {
   }, []);
 
   return (
-    <header className="sticky top-0 z-50 w-full max-w-full overflow-x-hidden border-b border-tan/60 bg-cream/95 backdrop-blur-md">
+    <header className="sticky top-0 z-50 w-full border-b border-tan/60 bg-cream/95 backdrop-blur-md">
       <div className="mx-auto max-w-7xl px-3.5 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between gap-2 sm:gap-4 py-3 sm:py-4">
           <Link
@@ -213,7 +213,7 @@ export const Navbar: React.FC<NavbarProps> = ({ logoUrl }) => {
       </div>
 
       {mobileOpen && (
-        <div className="fixed inset-x-0 top-[73px] bottom-0 z-50 flex flex-col bg-cream/98 backdrop-blur-md lg:hidden">
+        <div className="absolute top-full left-0 right-0 h-[calc(100dvh-100%)] z-50 flex flex-col bg-cream/98 backdrop-blur-md shadow-2xl lg:hidden">
           <nav
             className="flex-1 overflow-y-auto px-4 py-2 sm:px-6"
             aria-label="Mobile"
