@@ -3,49 +3,82 @@ import Image from "next/image";
 import { Metadata } from "next";
 import { PageHero } from "@/components/ui/PageHero";
 import { CTABanner } from "@/components/ui/CTABanner";
+import { sanityFetch } from "@/sanity/lib/live";
 
 export const metadata: Metadata = {
   title: "Gallery",
   description:
-    "Explore completed microtopping and limewash projects by Lime Craft Collective across Delhi NCR and beyond.",
+    "Explore completed Micro Concrete, Limewash, Textured Finish, and Terrazzo projects by Lime Craft Collective across Delhi NCR and beyond.",
 };
 
 interface GalleryItem {
   caption: string;
   tag: string;
   image: string;
-  aspect: "3/2" | "4/5" | "square";
 }
 
-const galleryItems: GalleryItem[] = [
-  { caption: "Seamless microtopping floor", tag: "Microtopping", image: "/images/pdf/microtopping-cover.jpg", aspect: "3/2" },
-  { caption: "Limewash feature wall", tag: "Limewash", image: "/images/pdf/limewash-cover.jpg", aspect: "4/5" },
-  { caption: "Smooth texture surface", tag: "Microtopping", image: "/images/pdf/swatch-smooth.jpg", aspect: "square" },
-  { caption: "Rough-texture finish", tag: "Microtopping", image: "/images/pdf/swatch-rough.jpg", aspect: "3/2" },
-  { caption: "Breathable lime plaster", tag: "Limewash", image: "/images/pdf/philosophy.jpg", aspect: "4/5" },
-  { caption: "Residential microtopping", tag: "Microtopping", image: "/images/pdf/microtopping-process.jpg", aspect: "square" },
-  { caption: "Lime Silk finish detail", tag: "Limewash", image: "/images/pdf/swatch-silk.jpg", aspect: "3/2" },
-  { caption: "Liquid Metal feature surface", tag: "Limewash", image: "/images/pdf/swatch-metal.jpg", aspect: "4/5" },
-  { caption: "Commercial microtopping lobby", tag: "Microtopping", image: "/images/pdf/texture-1.jpg", aspect: "square" },
-  { caption: "Lime Rustic wall", tag: "Limewash", image: "/images/pdf/swatch-semi.jpg", aspect: "3/2" },
-  { caption: "Bespoke color microtopping", tag: "Microtopping", image: "/images/pdf/texture-2.jpg", aspect: "4/5" },
-  { caption: "Hand-troweled lime texture", tag: "Limewash", image: "/images/pdf/texture-3.jpg", aspect: "square" },
+const fallbackItems: GalleryItem[] = [
+  { caption: "Seamless micro concrete floor", tag: "Micro Concrete", image: "/images/pdf/microtopping-cover.jpg" },
+  { caption: "Micro concrete finish in progress", tag: "Micro Concrete", image: "/images/pdf/microtopping-process.jpg" },
+  { caption: "Commercial micro concrete floor", tag: "Micro Concrete", image: "/images/pdf/texture-1.jpg" },
+  { caption: "Bespoke colored micro concrete", tag: "Micro Concrete", image: "/images/pdf/texture-2.jpg" },
+  { caption: "Rough-texture micro surface", tag: "Micro Concrete", image: "/images/pdf/benefit-2.jpg" },
+  { caption: "Limewash feature wall", tag: "Limewash", image: "/images/pdf/limewash-cover.jpg" },
+  { caption: "Warm limewash living wall", tag: "Limewash", image: "/images/pdf/philosophy.jpg" },
+  { caption: "Limewash texture detail", tag: "Limewash", image: "/images/pdf/texture-3.jpg" },
+  { caption: "Breathable lime plaster", tag: "Limewash", image: "/images/pdf/benefit-1.jpg" },
+  { caption: "Hand-applied textured finish", tag: "Textured Finish", image: "/images/Textured%20Finish/hero.jpeg" },
+  { caption: "Textured finish wall detail", tag: "Textured Finish", image: "/images/Textured%20Finish/WhatsApp%20Image%202026-08-04%20at%203.41.41%20PM.jpeg" },
+  { caption: "Textured feature surface", tag: "Textured Finish", image: "/images/Textured%20Finish/WhatsApp%20Image%202026-08-04%20at%203.41.18%20PM%20(1).jpeg" },
+  { caption: "Hand-applied texture", tag: "Textured Finish", image: "/images/Textured%20Finish/WhatsApp%20Image%202026-08-04%20at%203.41.17%20PM.jpeg" },
+  { caption: "Textured finish surface", tag: "Textured Finish", image: "/images/Textured%20Finish/WhatsApp%20Image%202026-08-04%20at%203.41.41%20PM1.jpeg" },
+  { caption: "Subtle texture detail", tag: "Textured Finish", image: "/images/Textured%20Finish/WhatsApp%20Image%202026-08-04%20at%203.41.17%20PM%20(1).jpeg" },
+  { caption: "Polished terrazzo flooring", tag: "Terrazzo Flooring", image: "/images/Terrazzo/Hero.jpeg" },
+  { caption: "Terrazzo aggregate detail", tag: "Terrazzo Flooring", image: "/images/Terrazzo/sample.jpeg" },
+  { caption: "Terrazzo speckle surface", tag: "Terrazzo Flooring", image: "/images/Terrazzo/sample2.jpeg" },
+  { caption: "Seamless terrazzo floor", tag: "Terrazzo Flooring", image: "/images/Terrazzo/sample3.jpeg" },
+  { caption: "Terrazzo finish option", tag: "Terrazzo Flooring", image: "/images/Terrazzo/sample5.jpeg" },
+  { caption: "Terrazzo flooring showcase", tag: "Terrazzo Flooring", image: "/images/Terrazzo/12.jpeg" },
 ];
 
-const aspectClasses: Record<GalleryItem["aspect"], string> = {
-  "3/2": "aspect-[3/2]",
-  "4/5": "aspect-[4/5]",
-  square: "aspect-square",
-};
+async function getGallery(): Promise<GalleryItem[]> {
+  try {
+    const data = await sanityFetch({
+      query: `*[_type == "galleryImage"] | order(_createdAt desc) {
+        caption,
+        image{ asset->{ url } },
+        "serviceName": service->name
+      }`,
+    });
+    type GalleryDoc = {
+      caption?: string;
+      image?: { asset?: { url?: string } };
+      serviceName?: string;
+    };
+    const docs = ((data.data ?? []) as GalleryDoc[]).filter(
+      (doc) => doc.image?.asset?.url,
+    );
+    if (docs.length === 0) return fallbackItems;
+    return docs.map((doc) => ({
+      caption: doc.caption || "Completed project",
+      tag: doc.serviceName || "General",
+      image: doc.image!.asset!.url!,
+    }));
+  } catch {
+    return fallbackItems;
+  }
+}
 
-export default function GalleryPage() {
+export default async function GalleryPage() {
+  const galleryItems = await getGallery();
+
   return (
     <div>
       <PageHero
         kicker="Our Work"
         title="Project Gallery"
-        subtitle="A selection of completed surfaces — microtopping and limewash — handcrafted for residential and commercial spaces."
-        image="/images/pdf/texture-1.jpg"
+        subtitle="A selection of completed surfaces — Micro Concrete, Limewash, Textured Finish, and Terrazzo — handcrafted for residential and commercial spaces."
+        image="/images/pdf/texture-2.jpg"
       />
 
       <section className="py-20 md:py-28">
@@ -56,7 +89,7 @@ export default function GalleryPage() {
                 key={idx}
                 className="group relative overflow-hidden rounded-[4px] border border-tan/60 transition-all duration-300 hover:-translate-y-1 hover:shadow-md"
               >
-                <div className={`relative ${aspectClasses[item.aspect]}`}>
+                <div className="relative aspect-[3/2]">
                   <Image
                     src={item.image}
                     alt={item.caption}

@@ -26,6 +26,12 @@ const serviceQuery = `*[_type == "service" && slug.current == $slug][0]{
     title,
     description
   },
+  textures[]{
+    _key,
+    name,
+    description
+  },
+  maintenancePoints,
   swatches[]->{
     _id,
     name,
@@ -51,13 +57,16 @@ interface ServiceDoc {
   description?: string;
   heroImage?: { asset?: { url?: string } };
   whyPoints?: { _key?: string; title: string; description: string }[];
+  textures?: { _key?: string; name: string; description: string }[];
+  maintenancePoints?: string[];
   swatches?: SanitySwatch[];
 }
 
 const fallbackHeroImages: Record<string, string> = {
-  microtopping: "/images/pdf/microtopping-cover.jpg",
+  "micro-concrete": "/images/pdf/microtopping-cover.jpg",
   limewash: "/images/pdf/limewash-cover.jpg",
-  terrazzo: "/images/pdf/texture-1.jpg",
+  "textured-finish": "/images/Textured%20Finish/hero.jpeg",
+  "terrazzo-flooring": "/images/Terrazzo/Hero.jpeg",
 };
 
 const fallbackSwatchImages: Record<string, string> = {
@@ -155,6 +164,14 @@ export default async function ServicePage({ params }: PageProps) {
     service.whyPoints && service.whyPoints.length > 0
       ? service.whyPoints
       : undefined;
+  const textures =
+    service.textures && service.textures.length > 0
+      ? service.textures
+      : undefined;
+  const maintenancePoints =
+    service.maintenancePoints && service.maintenancePoints.length > 0
+      ? service.maintenancePoints
+      : undefined;
   const swatches =
     service.swatches && service.swatches.length > 0
       ? service.swatches
@@ -209,6 +226,31 @@ export default async function ServicePage({ params }: PageProps) {
         </section>
       )}
 
+      {textures && (
+        <section className="py-20 md:py-28">
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <SectionHeading
+              kicker="Texture & Tone"
+              accentTitle="Texture"
+              title="& Tone"
+              subtitle="Choose the character of your surface — from a quiet, polished plane to a pronounced matte texture."
+            />
+            <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
+              {textures.map((texture) => (
+                <div
+                  key={texture._key ?? texture.name}
+                  className="rounded-[4px] border border-tan/60 bg-white/60 p-8 transition-all duration-300 hover:-translate-y-1 hover:shadow-md"
+                >
+                  <span className="mb-4 block h-1 w-10 bg-terracotta" aria-hidden="true" />
+                  <h3 className="font-serif text-2xl font-semibold text-ink">{texture.name}</h3>
+                  <p className="mt-3 text-sm leading-relaxed text-muted">{texture.description}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
       {swatches && (
         <section className="py-20 md:py-28">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -228,6 +270,31 @@ export default async function ServicePage({ params }: PageProps) {
                 image: resolveSwatchImage(swatch),
               }))}
             />
+          </div>
+        </section>
+      )}
+
+      {maintenancePoints && (
+        <section className="border-y border-tan/40 bg-white/50 py-20 md:py-28">
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <SectionHeading
+              kicker="Care & Maintenance"
+              accentTitle="Simple"
+              title="Maintenance"
+              subtitle="Low-maintenance by design. A few simple habits keep it looking new."
+            />
+            <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-2 lg:gap-16">
+              <div className="relative aspect-[3/2] overflow-hidden rounded-[4px] border border-tan/60">
+                <Image
+                  src={heroImage}
+                  alt={`Maintained ${service.name} surface`}
+                  fill
+                  sizes="(min-width: 1024px) 50vw, 100vw"
+                  className="object-cover"
+                />
+              </div>
+              <CheckList items={maintenancePoints} columns={1} circleVariant="olive" />
+            </div>
           </div>
         </section>
       )}

@@ -11,7 +11,7 @@ import { Button } from "@/components/ui/Button";
 export const metadata: Metadata = {
   title: "About Us",
   description:
-    "Learn about Lime Craft Collective — transforming raw concrete into elegant architectural statements through microtopping and limewash.",
+    "Learn about Lime Craft Collective — transforming raw concrete into elegant architectural statements through micro concrete, limewash, textured finishes, and terrazzo flooring.",
 };
 
 const philosophyPoints = [
@@ -51,7 +51,7 @@ export default function AboutPage() {
       <SplitSection
         kicker="Who We Are"
         title="Transforming Raw Concrete into Elegant Statements"
-        subtitle="Lime Craft Collective specializes in decorative concrete surfaces — microtopping and limewash — for residential and commercial spaces. We blend luxury aesthetics with durability and cost efficiency to redefine what a surface can be."
+        subtitle="Lime Craft Collective specializes in decorative concrete surfaces — micro concrete and limewash — for residential and commercial spaces. We blend luxury aesthetics with durability and cost efficiency to redefine what a surface can be."
         image={
           <div className="relative aspect-[4/5] overflow-hidden rounded-[4px] border border-tan/60">
             <Image

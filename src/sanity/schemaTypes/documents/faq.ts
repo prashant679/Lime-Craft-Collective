@@ -10,7 +10,7 @@ export const faq = defineType({
       name: 'question',
       title: 'Question',
       type: 'string',
-      description: 'The question a customer might ask, e.g. "What is microtopping?"',
+      description: 'The question a customer might ask, e.g. "What is micro concrete?"',
       validation: (rule) => rule.required().error('Add the question'),
     }),
     defineField({

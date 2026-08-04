@@ -68,25 +68,14 @@ interface ServiceCard {
   alt: string;
 }
 
-const serviceImages: Record<string, { image: string; alt: string }> = {
-  microtopping: {
-    image: "/images/pdf/microtopping-cover.jpg",
-    alt: "Seamless microtopping concrete finish",
-  },
-  limewash: {
-    image: "/images/pdf/limewash-cover.jpg",
-    alt: "Limewash limestone plaster finish",
-  },
-};
-
-const fallbackServices: ServiceCard[] = [
+const services: ServiceCard[] = [
   {
-    href: "/services/microtopping",
-    title: "Microtopping",
+    href: "/services/micro-concrete",
+    title: "Micro Concrete",
     description:
       "Ultra-thin decorative concrete coatings creating seamless, modern surfaces for floors and walls.",
     image: "/images/pdf/microtopping-cover.jpg",
-    alt: "Seamless microtopping concrete finish",
+    alt: "Seamless micro concrete finish",
   },
   {
     href: "/services/limewash",
@@ -97,97 +86,102 @@ const fallbackServices: ServiceCard[] = [
     alt: "Limewash limestone plaster finish",
   },
   {
-    href: "/contact",
+    href: "/services/textured-finish",
+    title: "Textured Finish",
+    description:
+      "Hand-applied textures that bring tactile depth to walls and floors — dimension without pattern or noise.",
+    image: "/images/Textured%20Finish/hero.jpeg",
+    alt: "Hand-applied textured finish",
+  },
+  {
+    href: "/services/terrazzo-flooring",
     title: "Terrazzo Flooring",
     description:
-      "Bespoke terrazzo flooring on request — get in touch to discuss your project.",
-    image: "/images/pdf/philosophy.jpg",
-    alt: "Bespoke handcrafted surface",
+      "Timeless speckled elegance poured and polished to a seamless, durable finish built to last generations.",
+    image: "/images/Terrazzo/Hero.jpeg",
+    alt: "Polished terrazzo flooring",
   },
 ];
 
 const galleryItems = [
   {
-    image: "/images/pdf/texture-1.jpg",
-    caption: "Seamless microtopping floor",
-    tag: "Microtopping",
+    image: "/images/pdf/microtopping-cover.jpg",
+    caption: "Seamless micro concrete floor",
+    tag: "Micro Concrete",
   },
   {
-    image: "/images/pdf/texture-2.jpg",
+    image: "/images/pdf/limewash-cover.jpg",
     caption: "Limewash feature wall",
     tag: "Limewash",
   },
   {
-    image: "/images/pdf/benefit-1.jpg",
-    caption: "Smooth texture finish",
-    tag: "Microtopping",
+    image: "/images/Textured%20Finish/hero.jpeg",
+    caption: "Hand-applied textured finish",
+    tag: "Textured Finish",
+  },
+  {
+    image: "/images/Terrazzo/Hero.jpeg",
+    caption: "Polished terrazzo floor",
+    tag: "Terrazzo Flooring",
   },
   {
     image: "/images/pdf/benefit-2.jpg",
     caption: "Rough-texture surface",
-    tag: "Microtopping",
+    tag: "Micro Concrete",
   },
   {
     image: "/images/pdf/texture-3.jpg",
     caption: "Breathable lime plaster",
     tag: "Limewash",
   },
-  {
-    image: "/images/pdf/benefit-3.jpg",
-    caption: "Residential microtopping",
-    tag: "Microtopping",
-  },
 ];
 
-function resolveServices(remote: ServiceCard[]): ServiceCard[] {
-  if (remote.length === 0) return fallbackServices;
-
-  return remote.map((service) => {
-    const key = service.title.toLowerCase();
-    const matched =
-      serviceImages[key] ||
-      (key.includes("terrazzo") ? fallbackServices[2] : null);
-
-    return {
-      title: service.title,
-      description: service.description,
-      href: key.includes("terrazzo") ? "/contact" : service.href,
-      image: matched?.image || fallbackServices[2].image,
-      alt: matched?.alt || fallbackServices[2].alt,
-    };
-  });
-}
-
 export default async function Home() {
-  let services: ServiceCard[] = [];
+  let serviceCards: ServiceCard[] = services;
 
   try {
     const data = await sanityFetch({
-      query: `*[_type == "service"][0...8] | order(name asc) {
+      query: `*[_type == "service"] | order(name asc) {
         _id,
         name,
         slug,
-        shortDescription
+        shortDescription,
+        heroImage{ asset->{ url } }
       }`,
     });
     type ServiceDoc = {
       _id: string;
       name: string;
       slug: { current: string } | null;
-      shortDescription: string;
+      shortDescription?: string;
+      heroImage?: { asset?: { url?: string } };
     };
-    services = ((data.data ?? []) as ServiceDoc[]).map((service) => ({
-      title: service.name,
-      description: service.shortDescription,
-      href: `/services/${service.slug?.current ?? service.name.toLowerCase()}`,
-      image: "",
-      alt: `${service.name} service`,
-    }));
+    const docs = ((data.data ?? []) as ServiceDoc[]).filter(
+      (doc) => doc.slug?.current,
+    );
+    if (docs.length > 0) {
+      const imageFor: Record<string, { image: string; alt: string }> = {
+        "micro-concrete": { image: "/images/pdf/microtopping-cover.jpg", alt: "Micro Concrete finish" },
+        limewash: { image: "/images/pdf/limewash-cover.jpg", alt: "Limewash finish" },
+        "textured-finish": { image: "/images/Textured%20Finish/hero.jpeg", alt: "Textured finish" },
+        "terrazzo-flooring": { image: "/images/Terrazzo/Hero.jpeg", alt: "Terrazzo flooring" },
+      };
+      serviceCards = docs.map((service) => {
+        const slug = service.slug!.current!;
+        const fallback = imageFor[slug];
+        const img = service.heroImage?.asset?.url || fallback?.image || "";
+        return {
+          title: service.name,
+          description: service.shortDescription || service.name,
+          href: `/services/${slug}`,
+          image: img,
+          alt: fallback?.alt ?? `${service.name} finish`,
+        };
+      });
+    }
   } catch {
-    services = [];
+    serviceCards = services;
   }
-
-  const serviceCards = resolveServices(services);
 
   return (
     <div>
@@ -244,7 +238,7 @@ export default async function Home() {
           <div className="relative aspect-[4/5] overflow-hidden rounded-[4px] border border-tan/60">
             <Image
               src="/images/pdf/about.jpg"
-              alt="Microtopping finish in progress"
+              alt="Micro Concrete finish in progress"
               fill
               sizes="(min-width: 1024px) 50vw, 100vw"
               className="object-cover"
@@ -280,9 +274,9 @@ export default async function Home() {
           <SectionHeading
             kicker="What We Do"
             title="Our Services"
-            subtitle="Three ways to bring warm, handcrafted texture into your space."
+            subtitle="Four ways to bring warm, handcrafted texture into your space."
           />
-          <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
+          <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4">
             {serviceCards.map((service) => (
               <Link
                 key={service.title}
@@ -295,7 +289,7 @@ export default async function Home() {
                       src={service.image}
                       alt={service.alt}
                       fill
-                      sizes="(min-width: 768px) 33vw, 100vw"
+                      sizes="(min-width: 1024px) 25vw, (min-width: 768px) 50vw, 100vw"
                       className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
                     />
                   ) : (

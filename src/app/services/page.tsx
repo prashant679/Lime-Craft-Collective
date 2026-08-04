@@ -5,22 +5,47 @@ import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 import { PageHero } from "@/components/ui/PageHero";
 import { CTABanner } from "@/components/ui/CTABanner";
+import { sanityFetch } from "@/sanity/lib/live";
 
 export const metadata: Metadata = {
   title: "Services",
   description:
-    "Decorative concrete surfaces by Lime Craft Collective — Microtopping, Limewash, and bespoke Terrazzo Flooring.",
+    "Decorative concrete services by Lime Craft Collective — Micro Concrete, Limewash, Textured Finish, and bespoke Terrazzo Flooring.",
 };
 
-const services = [
+interface ServiceDoc {
+  _id: string;
+  name: string;
+  slug: { current: string } | null;
+  shortDescription?: string;
+  heroImage?: { asset?: { url?: string } };
+}
+
+interface ServiceCard {
+  href: string;
+  title: string;
+  tagline: string;
+  description: string;
+  image: string;
+  alt: string;
+}
+
+const heroFallbacks: Record<string, string> = {
+  "micro-concrete": "/images/pdf/microtopping-cover.jpg",
+  limewash: "/images/pdf/limewash-cover.jpg",
+  "textured-finish": "/images/Textured%20Finish/hero.jpeg",
+  "terrazzo-flooring": "/images/Terrazzo/Hero.jpeg",
+};
+
+const fallbackServices: ServiceCard[] = [
   {
-    href: "/services/microtopping",
-    title: "Microtopping",
+    href: "/services/micro-concrete",
+    title: "Micro Concrete",
     tagline: "The art of minimalism",
     description:
       "Ultra-thin (up to 3mm) decorative concrete coatings applied over existing floors or walls. Seamless, joint-free surfaces with custom colors and textures.",
     image: "/images/pdf/microtopping-cover.jpg",
-    alt: "Microtopping — seamless concrete coating",
+    alt: "Micro Concrete — seamless concrete coating",
   },
   {
     href: "/services/limewash",
@@ -32,23 +57,65 @@ const services = [
     alt: "Limewash — natural limestone plaster",
   },
   {
-    href: "/contact",
-    title: "Terrazzo Flooring",
-    tagline: "Bespoke, on request",
+    href: "/services/textured-finish",
+    title: "Textured Finish",
+    tagline: "Dimension, by hand",
     description:
-      "We also offer bespoke Terrazzo Flooring. A short conversation is all it takes to discuss your project — get in touch to learn more.",
-    image: "/images/pdf/texture-1.jpg",
-    alt: "Terrazzo — bespoke flooring",
+      "Hand-applied textures that bring tactile depth to walls and floors — light and shadow do the work, without pattern or noise.",
+    image: "/images/Textured%20Finish/hero.jpeg",
+    alt: "Textured Finish — hand-applied surface",
+  },
+  {
+    href: "/services/terrazzo-flooring",
+    title: "Terrazzo Flooring",
+    tagline: "Bespoke, poured to last",
+    description:
+      "Timeless speckled elegance poured and polished with a modern, custom palette — a seamless, durable finish built to last generations.",
+    image: "/images/Terrazzo/Hero.jpeg",
+    alt: "Terrazzo — bespoke poured flooring",
   },
 ];
 
-export default function ServicesPage() {
+async function getServices(): Promise<ServiceCard[]> {
+  try {
+    const data = await sanityFetch({
+      query: `*[_type == "service"] | order(name asc) {
+        _id,
+        name,
+        slug,
+        shortDescription,
+        heroImage{ asset->{ url } }
+      }`,
+    });
+    const docs = ((data.data ?? []) as ServiceDoc[]).filter(
+      (doc) => doc.slug?.current,
+    );
+    if (docs.length === 0) return fallbackServices;
+    return docs.map((doc) => {
+      const slug = doc.slug!.current!;
+      return {
+        href: `/services/${slug}`,
+        title: doc.name,
+        tagline: "Handcrafted for your space",
+        description: doc.shortDescription || doc.name,
+        image: doc.heroImage?.asset?.url || heroFallbacks[slug] || "/images/pdf/texture-1.jpg",
+        alt: `${doc.name} — handcrafted surface`,
+      };
+    });
+  } catch {
+    return fallbackServices;
+  }
+}
+
+export default async function ServicesPage() {
+  const services = await getServices();
+
   return (
     <div>
       <PageHero
         kicker="Our Services"
         title="Surfaces, Handcrafted"
-        subtitle="Three ways to bring warm, considered texture into your space — each one bespoke, each one built to last."
+        subtitle="Four ways to bring warm, considered texture into your space — each one bespoke, each one built to last."
         image="/images/pdf/texture-2.jpg"
       />
 
@@ -56,7 +123,7 @@ export default function ServicesPage() {
         <div className="mx-auto max-w-7xl space-y-16 px-4 sm:px-6 md:space-y-24 lg:px-8">
           {services.map((service, idx) => (
             <div
-              key={service.title}
+              key={service.href}
               className={`grid items-center gap-10 lg:grid-cols-2 lg:gap-16 ${
                 idx % 2 === 1 ? "lg:[&>*:first-child]:order-2" : ""
               }`}

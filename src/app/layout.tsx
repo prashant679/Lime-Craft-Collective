@@ -28,7 +28,7 @@ export const metadata: Metadata = {
     template: "%s | Lime Craft Collective",
   },
   description:
-    "Transforming raw concrete into elegant architectural statements. Premium microtopping, limewash plasterwork, and bespoke surfaces for residential and commercial spaces.",
+    "Transforming raw concrete into elegant architectural statements. Premium micro concrete, limewash plasterwork, and bespoke surfaces for residential and commercial spaces.",
 };
 
 export default function RootLayout({

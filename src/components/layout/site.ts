@@ -24,8 +24,10 @@ export const NAV_LINKS: NavLink[] = [
     label: "Services",
     href: "/services",
     children: [
-      { label: "Microtopping", href: "/services/microtopping" },
+      { label: "Micro Concrete", href: "/services/micro-concrete" },
       { label: "Limewash", href: "/services/limewash" },
+      { label: "Textured Finish", href: "/services/textured-finish" },
+      { label: "Terrazzo Flooring", href: "/services/terrazzo-flooring" },
     ],
   },
   { label: "Gallery", href: "/gallery" },

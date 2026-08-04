@@ -5,13 +5,13 @@ export const service = defineType({
   title: 'Service',
   type: 'document',
   description:
-    'One of your services, such as Microtopping or Limewash. Each service becomes its own page on the website.',
+    'One of your services, such as Micro Concrete, Limewash, Textured Finish, or Terrazzo Flooring. Each service becomes its own page on the website.',
   fields: [
     defineField({
       name: 'name',
       title: 'Service Name',
       type: 'string',
-      description: 'The name of the service, e.g. Microtopping',
+      description: 'The name of the service, e.g. Micro Concrete',
       validation: (rule) => rule.required().error('Give this service a name'),
     }),
     defineField({
@@ -19,7 +19,7 @@ export const service = defineType({
       title: 'Web Address (slug)',
       type: 'slug',
       description:
-        'The end part of the web address for this service, e.g. /services/microtopping. Usually you can leave this auto-generated.',
+        'The end part of the web address for this service, e.g. /services/micro-concrete. Usually you can leave this auto-generated.',
       options: {
         source: 'name',
         maxLength: 96,
@@ -84,6 +84,54 @@ export const service = defineType({
               title: 'title',
             },
           },
+        }),
+      ],
+    }),
+    defineField({
+      name: 'textures',
+      title: 'Texture & Tone',
+      type: 'array',
+      description:
+        'The texture options shown on this service page, each with a short description.',
+      of: [
+        defineArrayMember({
+          type: 'object',
+          name: 'texture',
+          title: 'Texture',
+          fields: [
+            defineField({
+              name: 'name',
+              title: 'Texture Name',
+              type: 'string',
+              description: 'e.g. Smooth, Semi-Rough, Rough',
+              validation: (rule) => rule.required(),
+            }),
+            defineField({
+              name: 'description',
+              title: 'Description',
+              type: 'text',
+              rows: 3,
+              description: 'One or two sentences describing this texture.',
+              validation: (rule) => rule.required(),
+            }),
+          ],
+          preview: {
+            select: {
+              title: 'name',
+            },
+          },
+        }),
+      ],
+    }),
+    defineField({
+      name: 'maintenancePoints',
+      title: 'Care & Maintenance',
+      type: 'array',
+      description: 'Short maintenance tips shown on this service page.',
+      of: [
+        defineArrayMember({
+          type: 'string',
+          title: 'Tip',
         }),
       ],
     }),

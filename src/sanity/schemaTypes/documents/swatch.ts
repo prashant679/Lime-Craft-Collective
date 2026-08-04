@@ -50,7 +50,7 @@ export const swatch = defineType({
       title: 'Show This Swatch On These Service Pages',
       type: 'array',
       description:
-        'Choose which service pages display this swatch (e.g. Microtopping and/or Limewash).',
+        'Choose which service pages display this swatch (e.g. Micro Concrete and/or Limewash).',
       of: [
         defineArrayMember({
           type: 'reference',

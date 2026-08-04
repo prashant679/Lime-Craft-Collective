@@ -19,7 +19,7 @@ export const galleryImage = defineType({
       title: 'Caption',
       type: 'string',
       description:
-        'A short label for the photo, e.g. "Seamless microtopping floor". Also used as the photo description.',
+        'A short label for the photo, e.g. "Seamless micro concrete floor". Also used as the photo description.',
       validation: (rule) => rule.required().error('Add a short caption'),
     }),
     defineField({

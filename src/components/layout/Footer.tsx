@@ -36,7 +36,7 @@ export const Footer: React.FC = () => {
               </span>
             </Link>
             <p className="max-w-xs text-sm leading-relaxed text-tan/85">
-              Handcrafted microtopping and limewash finishes for residential and commercial
+              Handcrafted micro concrete and limewash finishes for residential and commercial
               spaces — transforming raw concrete into elegant architectural statements.
             </p>
             <a
@@ -129,7 +129,7 @@ export const Footer: React.FC = () => {
             &copy; {new Date().getFullYear()} {SITE.name}. All rights reserved.
           </p>
           <p className="text-center sm:text-right">
-            Handcrafted Microtopping &amp; Limewash Finishes &bull; Delhi NCR &amp; Beyond
+            Handcrafted Micro Concrete &amp; Limewash Finishes &bull; Delhi NCR &amp; Beyond
           </p>
         </div>
       </div>

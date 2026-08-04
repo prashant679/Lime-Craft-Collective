@@ -9,34 +9,34 @@ import { Button } from "@/components/ui/Button";
 export const metadata: Metadata = {
   title: "FAQs",
   description:
-    "Answers to common questions about microtopping and limewash finishes — application, maintenance, cost, and service area.",
+    "Answers to common questions about micro concrete and limewash finishes — application, maintenance, cost, and service area.",
 };
 
 const faqs = [
   {
-    question: "What is microtopping and how is it different from regular concrete flooring?",
+    question: "What is micro concrete and how is it different from regular concrete flooring?",
     answer:
-      "Microtopping is an ultra-thin (up to 3mm) decorative concrete coating applied over existing floors or walls, creating a seamless, joint-free surface. Unlike traditional concrete, it requires no demolition and doesn't change floor levels.",
+      "Micro Concrete is an ultra-thin (up to 3mm) decorative concrete coating applied over existing floors or walls, creating a seamless, joint-free surface. Unlike traditional concrete, it requires no demolition and doesn't change floor levels.",
   },
   {
-    question: "What's the difference between Microtopping and Limewash?",
+    question: "What's the difference between Micro Concrete and Limewash?",
     answer:
-      "Microtopping is a concrete-based coating suited to both floors and walls with a sleek, modern finish. Limewash is a pure-limestone plaster finish, typically for walls, prized for its natural texture, breathability, and antique character.",
+      "Micro Concrete is a concrete-based coating suited to both floors and walls with a sleek, modern finish. Limewash is a pure-limestone plaster finish, typically for walls, prized for its natural texture, breathability, and antique character.",
   },
   {
     question: "Can these finishes be applied over my existing floors and walls?",
     answer:
-      "In most cases, yes — both microtopping and limewash are designed to apply directly over sound existing surfaces without demolition. A site visit or consultation will confirm suitability for your specific space.",
+      "In most cases, yes — both micro concrete and limewash are designed to apply directly over sound existing surfaces without demolition. A site visit or consultation will confirm suitability for your specific space.",
   },
   {
     question: "Are these finishes suitable for bathrooms and wet areas?",
     answer:
-      "Yes — microtopping in particular is built for water, wear, and stain resistance, making it well suited to bathrooms and high-moisture spaces.",
+      "Yes — micro concrete in particular is built for water, wear, and stain resistance, making it well suited to bathrooms and high-moisture spaces.",
   },
   {
     question: "What colors and textures are available?",
     answer:
-      "A wide, fully customizable palette from muted earth tones to bold modern hues, in Smooth, Semi-Rough, and Rough textures for microtopping, plus signature Limewash finishes like Liquid Metal, Lime Crumbled, Lime Rustic, and Lime Silk.",
+      "A wide, fully customizable palette from muted earth tones to bold modern hues, in Smooth, Semi-Rough, and Rough textures for Micro Concrete, plus signature Limewash finishes like Liquid Metal, Lime Crumbled, Lime Rustic, and Lime Silk.",
   },
   {
     question: "How do I maintain these surfaces?",
