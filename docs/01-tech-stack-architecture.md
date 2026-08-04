@@ -54,13 +54,9 @@ This is a lightweight React component — no external service needed.
 
 ## 5. Contact form & WhatsApp
 
-**Contact form → emails you:**
-- A Next.js API route receives the form submission and sends it via **Resend** (a transactional email API with a generous free tier, built specifically to pair well with Next.js/Vercel — minimal setup, no separate email server).
-- Fallback/simpler alternative if you want *zero* backend code at all: a form service like **Web3Forms** or **Formspree**, where the form posts directly to their API and they email you — even less to maintain, at the cost of a little less control over the email formatting.
-- **Recommendation:** Resend, since it's still very low-maintenance but keeps everything in your own codebase rather than depending on a third party's form infrastructure.
-
-**WhatsApp click-to-chat:**
-- Simple `wa.me/918586096452` link styled as a floating button — no SDK, no backend, effectively zero maintenance.
+**Contact form & WhatsApp click-to-chat:**
+- Submitting the contact form constructs a prefilled inquiry message (Name, Email, Phone, Message) and opens it directly via `wa.me/918586096452` — zero backend server, external API key, or transactional email service to maintain.
+- Floating WhatsApp click-to-chat button persistent on mobile viewports for 1-tap inquiries.
 
 ## 6. Content model (what you'll be able to edit in the CMS)
 
@@ -106,8 +102,7 @@ A lightweight, privacy-friendly analytics tool (Vercel Analytics if hosting on V
 
 - **Framework:** Next.js (App Router) + Tailwind CSS + Framer Motion (subtle motion)
 - **CMS:** Sanity.io via `next-sanity`
-- **Forms/email:** Next.js API route + Resend
-- **Chat:** WhatsApp `wa.me` link
+- **Forms & Chat:** Client-side WhatsApp `wa.me` prefilled links (zero backend dependency)
 - **Hosting:** Vercel (recommended), Netlify or Cloudflare Pages as alternatives
 - **Domain:** limecraftcollective.com (already owned)
 - **Analytics:** Vercel Analytics or Plausible (optional)

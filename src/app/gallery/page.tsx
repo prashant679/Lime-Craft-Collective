@@ -71,6 +71,17 @@ async function getGallery(): Promise<GalleryItem[]> {
 
 export default async function GalleryPage() {
   const galleryItems = await getGallery();
+  let heroImage = "/images/pdf/texture-2.jpg";
+
+  try {
+    const data = await sanityFetch({
+      query: `*[_type == "siteSettings"][0]{ "hero": galleryHeroImage.asset->url }`,
+    });
+    const s = data.data as { hero?: string } | null;
+    if (s?.hero) heroImage = s.hero;
+  } catch {
+    // Keep fallback
+  }
 
   return (
     <div>
@@ -78,10 +89,10 @@ export default async function GalleryPage() {
         kicker="Our Work"
         title="Project Gallery"
         subtitle="A selection of completed surfaces — Micro Concrete, Limewash, Textured Finish, and Terrazzo — handcrafted for residential and commercial spaces."
-        image="/images/pdf/texture-2.jpg"
+        image={heroImage}
       />
 
-      <section className="py-20 md:py-28">
+      <section className="py-12 sm:py-16 md:py-24 lg:py-28">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:gap-6">
             {galleryItems.map((item, idx) => (
@@ -98,12 +109,12 @@ export default async function GalleryPage() {
                     className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
                   />
                 </div>
-                <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-ink/75 via-ink/10 to-transparent opacity-90" />
-                <div className="absolute bottom-0 left-0 right-0 p-4">
+                <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-ink/80 via-ink/15 to-transparent opacity-90" />
+                <div className="absolute bottom-0 left-0 right-0 p-3 sm:p-4">
                   <span className="text-[10px] uppercase tracking-[0.2em] text-[#E8A47E]">
                     {item.tag}
                   </span>
-                  <p className="mt-0.5 font-serif text-base font-semibold text-cream">
+                  <p className="mt-0.5 font-serif text-sm font-semibold text-cream sm:text-base">
                     {item.caption}
                   </p>
                 </div>

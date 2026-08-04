@@ -42,8 +42,8 @@ export const PageHero: React.FC<PageHeroProps> = ({
         </>
       )}
       <div
-        className={`relative mx-auto max-w-7xl px-4 py-20 text-center sm:px-6 lg:px-8 ${
-          overImage ? "py-24 md:py-32" : "md:py-28"
+        className={`relative mx-auto max-w-7xl px-4 text-center sm:px-6 lg:px-8 ${
+          overImage ? "py-16 sm:py-24 md:py-32" : "py-12 sm:py-20 md:py-28"
         }`}
       >
         <span
@@ -54,7 +54,7 @@ export const PageHero: React.FC<PageHeroProps> = ({
           {kicker}
         </span>
         <h1
-          className={`mx-auto mt-4 max-w-4xl font-serif text-4xl font-bold leading-tight tracking-tight sm:text-5xl md:text-6xl ${
+          className={`mx-auto mt-3 max-w-4xl font-serif text-3xl font-bold leading-tight tracking-tight text-balance sm:mt-4 sm:text-5xl md:text-6xl ${
             overImage ? "text-cream" : "text-ink"
           }`}
         >
@@ -71,7 +71,7 @@ export const PageHero: React.FC<PageHeroProps> = ({
         </h1>
         {subtitle && (
           <p
-            className={`mx-auto mt-5 max-w-2xl text-base leading-relaxed md:text-lg ${
+            className={`mx-auto mt-4 max-w-2xl text-pretty text-sm leading-relaxed sm:mt-5 sm:text-base md:text-lg ${
               overImage ? "text-cream/85" : "text-muted"
             }`}
           >
@@ -79,7 +79,7 @@ export const PageHero: React.FC<PageHeroProps> = ({
           </p>
         )}
         {children && (
-          <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
+          <div className="mt-6 flex flex-col items-center justify-center gap-3 sm:mt-8 sm:flex-row sm:gap-4">
             {children}
           </div>
         )}

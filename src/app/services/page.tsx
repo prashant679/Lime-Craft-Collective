@@ -109,6 +109,17 @@ async function getServices(): Promise<ServiceCard[]> {
 
 export default async function ServicesPage() {
   const services = await getServices();
+  let heroImage = "/images/pdf/texture-2.jpg";
+
+  try {
+    const data = await sanityFetch({
+      query: `*[_type == "siteSettings"][0]{ "hero": servicesHeroImage.asset->url }`,
+    });
+    const s = data.data as { hero?: string } | null;
+    if (s?.hero) heroImage = s.hero;
+  } catch {
+    // Keep fallback
+  }
 
   return (
     <div>
@@ -116,7 +127,7 @@ export default async function ServicesPage() {
         kicker="Our Services"
         title="Surfaces, Handcrafted"
         subtitle="Four ways to bring warm, considered texture into your space — each one bespoke, each one built to last."
-        image="/images/pdf/texture-2.jpg"
+        image={heroImage}
       />
 
       <section className="py-20 md:py-28">

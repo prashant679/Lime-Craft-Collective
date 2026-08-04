@@ -30,25 +30,44 @@ interface FooterProps {
 
 export const Footer: React.FC<FooterProps> = ({ logoUrl }) => {
   return (
-    <footer className="bg-ink font-sans text-cream">
+    <footer className="w-full max-w-full overflow-x-hidden bg-ink font-sans text-cream">
       <div className="mx-auto max-w-7xl px-4 pb-10 pt-16 sm:px-6 md:pt-20 lg:px-8">
         <div className="grid grid-cols-1 gap-12 border-b border-tan/20 pb-12 md:grid-cols-2 lg:grid-cols-4 lg:gap-10">
           <div className="space-y-5">
-            <Link href="/" className="group inline-block focus:outline-none">
+            <Link href="/" className="group flex items-center gap-3 focus:outline-none">
               {logoUrl ? (
                 <Image
                   src={logoUrl}
                   alt={SITE.name}
-                  width={196}
-                  height={48}
-                  className="h-12 w-auto object-contain transition-opacity group-hover:opacity-90"
+                  width={220}
+                  height={56}
+                  className="h-12 w-auto object-contain transition-opacity group-hover:opacity-90 sm:h-14"
                 />
               ) : (
-                <span className="font-serif text-2xl font-bold tracking-tight text-cream transition-colors group-hover:text-terracotta">
+                <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-cream/10 text-terracotta transition-colors group-hover:bg-terracotta group-hover:text-cream sm:h-12 sm:w-12">
+                  <svg
+                    className="h-6 w-6 sm:h-7 sm:w-7"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="1.75"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    aria-hidden="true"
+                  >
+                    <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
+                  </svg>
+                </span>
+              )}
+              <div>
+                <span className="block font-serif text-2xl font-bold tracking-tight text-cream transition-colors group-hover:text-terracotta">
                   Lime Craft{" "}
                   <span className="font-normal italic text-terracotta">Collective</span>
                 </span>
-              )}
+                <span className="block text-[9px] uppercase tracking-[0.25em] text-tan/70 sm:text-[10px]">
+                  Handcrafted Textures
+                </span>
+              </div>
             </Link>
             <p className="max-w-xs text-sm leading-relaxed text-tan/85">
               Handcrafted micro concrete and limewash finishes for residential and commercial

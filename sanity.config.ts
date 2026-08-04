@@ -25,4 +25,22 @@ export default defineConfig({
     // https://www.sanity.io/docs/the-vision-plugin
     visionTool({defaultApiVersion: apiVersion}),
   ],
+  document: {
+    // For singletons like siteSettings, keep publish and discard changes actions clean
+    actions: (input, context) => {
+      if (context.schemaType === 'siteSettings') {
+        return input.filter(
+          ({ action }) => action && ['publish', 'discardChanges', 'restore'].includes(action)
+        )
+      }
+      return input
+    },
+    // Hide singletons from global "Create New" options
+    newDocumentOptions: (action, { creationContext }) => {
+      if (creationContext.type === 'global') {
+        return action.filter((template) => template.templateId !== 'siteSettings')
+      }
+      return action
+    },
+  },
 })

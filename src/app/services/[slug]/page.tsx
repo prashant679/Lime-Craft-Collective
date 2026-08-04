@@ -238,7 +238,7 @@ export default async function ServicePage({ params }: PageProps) {
       </PageHero>
 
       {whyPoints && (
-        <section className="py-20 md:py-28">
+        <section className="py-12 sm:py-16 md:py-24 lg:py-28">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <SectionHeading
               kicker={`Why ${service.name}`}
@@ -246,20 +246,20 @@ export default async function ServicePage({ params }: PageProps) {
               title={`Choose ${service.name}`}
               subtitle="The reasons this finish stands apart for both its look and its longevity."
             />
-            <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
+            <div className="grid grid-cols-1 gap-6 sm:gap-8 sm:grid-cols-2 lg:grid-cols-4">
               {whyPoints.map((point) => (
                 <div
                   key={point._key ?? point.title}
-                  className="rounded-[4px] border border-tan/60 bg-white/60 p-8 transition-all duration-300 hover:-translate-y-1 hover:shadow-md"
+                  className="rounded-[4px] border border-tan/60 bg-white/60 p-5 sm:p-6 md:p-8 transition-all duration-300 hover:-translate-y-1 hover:shadow-md"
                 >
                   <span
-                    className="mb-4 block h-1 w-10 bg-terracotta"
+                    className="mb-3 sm:mb-4 block h-1 w-10 bg-terracotta"
                     aria-hidden="true"
                   />
-                  <h3 className="font-serif text-xl font-semibold text-ink">
+                  <h3 className="font-serif text-lg sm:text-xl font-semibold text-ink">
                     {point.title}
                   </h3>
-                  <p className="mt-3 text-sm leading-relaxed text-muted">
+                  <p className="mt-2 sm:mt-3 text-xs sm:text-sm leading-relaxed text-muted">
                     {point.description}
                   </p>
                 </div>
@@ -270,7 +270,7 @@ export default async function ServicePage({ params }: PageProps) {
       )}
 
       {keyFeatures && (
-        <section className="border-y border-tan/40 bg-white/50 py-20 md:py-28">
+        <section className="border-y border-tan/40 bg-white/50 py-12 sm:py-16 md:py-24 lg:py-28">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <SectionHeading
               kicker="Performance"
@@ -284,7 +284,7 @@ export default async function ServicePage({ params }: PageProps) {
       )}
 
       {perfectApplications && (
-        <section className="py-20 md:py-28">
+        <section className="py-12 sm:py-16 md:py-24 lg:py-28">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <SectionHeading
               kicker="Where It Works"
@@ -297,7 +297,7 @@ export default async function ServicePage({ params }: PageProps) {
         </section>
       )}
 
-      <section className="py-20 md:py-28">
+      <section className="py-12 sm:py-16 md:py-24 lg:py-28">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <SectionHeading
             kicker="How We Work"
@@ -305,22 +305,22 @@ export default async function ServicePage({ params }: PageProps) {
             title="Process"
             subtitle="From the first surface check to the final seal — every stage is done by hand, in order."
           />
-          <ol className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4">
+          <ol className="grid grid-cols-1 gap-6 sm:gap-8 md:grid-cols-2 lg:grid-cols-4">
             {steps.map((step, index) => (
               <li
                 key={step._key ?? step.title}
-                className="relative rounded-[4px] border border-tan/60 bg-white/60 p-8"
+                className="relative rounded-[4px] border border-tan/60 bg-white/60 p-5 sm:p-6 md:p-8"
               >
                 <span
-                  className="mb-4 inline-flex h-11 w-11 items-center justify-center rounded-full bg-terracotta font-serif text-lg font-semibold text-cream"
+                  className="mb-3 sm:mb-4 inline-flex h-10 w-10 sm:h-11 sm:w-11 items-center justify-center rounded-full bg-terracotta font-serif text-base sm:text-lg font-semibold text-cream"
                   aria-hidden="true"
                 >
                   {index + 1}
                 </span>
-                <h3 className="font-serif text-xl font-semibold text-ink">
+                <h3 className="font-serif text-lg sm:text-xl font-semibold text-ink">
                   {step.title}
                 </h3>
-                <p className="mt-3 text-sm leading-relaxed text-muted">
+                <p className="mt-2 sm:mt-3 text-xs sm:text-sm leading-relaxed text-muted">
                   {step.description}
                 </p>
               </li>
@@ -329,7 +329,7 @@ export default async function ServicePage({ params }: PageProps) {
         </div>
       </section>
 
-      <section className="border-y border-tan/40 bg-white/50 py-20 md:py-28">
+      <section className="border-y border-tan/40 bg-white/50 py-12 sm:py-16 md:py-24 lg:py-28">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <SectionHeading
             kicker="Recent Work"
@@ -337,7 +337,7 @@ export default async function ServicePage({ params }: PageProps) {
             title="Gallery"
             subtitle={`A selection of completed ${service.name} surfaces.`}
           />
-          <ul className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:gap-6">
+          <ul className="grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-3 lg:gap-6">
             {galleryImages.map((item, idx) => (
               <li
                 key={idx}
@@ -354,9 +354,9 @@ export default async function ServicePage({ params }: PageProps) {
                 </div>
                 {item.caption && (
                   <>
-                    <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-ink/70 via-ink/10 to-transparent opacity-90" />
-                    <div className="absolute bottom-0 left-0 right-0 p-3">
-                      <p className="font-serif text-sm font-semibold leading-snug text-cream">
+                    <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-ink/80 via-ink/15 to-transparent opacity-90" />
+                    <div className="absolute bottom-0 left-0 right-0 p-2.5 sm:p-3">
+                      <p className="font-serif text-xs sm:text-sm font-semibold leading-snug text-cream">
                         {item.caption}
                       </p>
                     </div>

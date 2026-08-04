@@ -6,6 +6,8 @@ import { CTABanner } from "@/components/ui/CTABanner";
 import { SITE } from "@/components/layout/site";
 import { Button } from "@/components/ui/Button";
 
+import { sanityFetch } from "@/sanity/lib/live";
+
 export const metadata: Metadata = {
   title: "FAQs",
   description:
@@ -65,14 +67,26 @@ const faqs = [
   },
 ];
 
-export default function FaqsPage() {
+export default async function FaqsPage() {
+  let heroImage = "/images/pdf/philosophy.jpg";
+
+  try {
+    const data = await sanityFetch({
+      query: `*[_type == "siteSettings"][0]{ "hero": faqsHeroImage.asset->url }`,
+    });
+    const s = data.data as { hero?: string } | null;
+    if (s?.hero) heroImage = s.hero;
+  } catch {
+    // Keep fallback
+  }
+
   return (
     <div>
       <PageHero
         kicker="FAQs"
         title="Questions, Answered"
         subtitle="Everything a first-time client typically asks before starting a decorative concrete or limewash project."
-        image="/images/pdf/philosophy.jpg"
+        image={heroImage}
       />
 
       <section className="py-16 md:py-24">

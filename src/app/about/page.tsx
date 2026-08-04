@@ -8,6 +8,8 @@ import { CheckList } from "@/components/ui/CheckList";
 import { CTABanner } from "@/components/ui/CTABanner";
 import { Button } from "@/components/ui/Button";
 
+import { sanityFetch } from "@/sanity/lib/live";
+
 export const metadata: Metadata = {
   title: "About Us",
   description:
@@ -37,7 +39,27 @@ const philosophyPoints = [
   },
 ];
 
-export default function AboutPage() {
+export default async function AboutPage() {
+  let heroImage = "/images/pdf/about.jpeg";
+  let whoWeAreImage = "/images/pdf/microtopping-process.jpg";
+  let visionImage = "/images/pdf/philosophy.jpg";
+
+  try {
+    const data = await sanityFetch({
+      query: `*[_type == "siteSettings"][0]{
+        "hero": aboutHeroImage.asset->url,
+        "who": aboutWhoWeAreImage.asset->url,
+        "vision": aboutVisionImage.asset->url
+      }`,
+    });
+    const s = data.data as { hero?: string; who?: string; vision?: string } | null;
+    if (s?.hero) heroImage = s.hero;
+    if (s?.who) whoWeAreImage = s.who;
+    if (s?.vision) visionImage = s.vision;
+  } catch {
+    // Keep fallbacks
+  }
+
   return (
     <div>
       <PageHero
@@ -45,7 +67,7 @@ export default function AboutPage() {
         accentTitle="Our"
         title="Story"
         subtitle="Raw concrete, elevated into quiet, handcrafted luxury."
-        image="/images/pdf/about.jpeg"
+        image={heroImage}
       />
 
       <SplitSection
@@ -55,7 +77,7 @@ export default function AboutPage() {
         image={
           <div className="relative aspect-[4/5] overflow-hidden rounded-[4px] border border-tan/60">
             <Image
-              src="/images/pdf/microtopping-process.jpg"
+              src={whoWeAreImage}
               alt="Our craft in progress"
               fill
               sizes="(min-width: 1024px) 50vw, 100vw"
@@ -74,7 +96,7 @@ export default function AboutPage() {
         image={
           <div className="relative aspect-[4/5] overflow-hidden rounded-[4px] border border-tan/60">
             <Image
-              src="/images/pdf/philosophy.jpg"
+              src={visionImage}
               alt="Bespoke limewash finish"
               fill
               sizes="(min-width: 1024px) 50vw, 100vw"
