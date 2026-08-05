@@ -13,6 +13,9 @@ export const metadata: Metadata = {
   title: "Services",
   description:
     "Decorative concrete services by Lime Craft Collective — Micro Concrete, Limewash, Textured Finish, and bespoke Terrazzo Flooring.",
+  alternates: {
+    canonical: "/services",
+  },
 };
 
 interface ServiceDoc {

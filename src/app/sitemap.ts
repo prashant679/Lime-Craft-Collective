@@ -9,11 +9,12 @@ const defaultServiceSlugs = [
 ];
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const baseUrl =
-    process.env.NEXT_PUBLIC_SITE_URL ||
-    (process.env.VERCEL_URL
-      ? `https://${process.env.VERCEL_URL}`
-      : "https://limecraftcollective.com");
+  const rawBaseUrl =
+    process.env.NEXT_PUBLIC_SITE_URL || "https://www.limecraftcollective.com";
+  const baseUrl = rawBaseUrl.replace(
+    "https://limecraftcollective.com",
+    "https://www.limecraftcollective.com"
+  );
 
   let serviceSlugs = defaultServiceSlugs;
   try {

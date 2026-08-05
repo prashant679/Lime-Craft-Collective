@@ -16,6 +16,9 @@ export const metadata: Metadata = {
   title: "About Us",
   description:
     "Learn about Lime Craft Collective — transforming raw concrete into elegant architectural statements through micro concrete, limewash, textured finishes, and terrazzo flooring.",
+  alternates: {
+    canonical: "/about",
+  },
 };
 
 const philosophyPoints = [

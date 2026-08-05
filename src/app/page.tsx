@@ -1,4 +1,5 @@
 import React from "react";
+import type { Metadata } from "next";
 import Image from "next/image";
 import { ArrowRight, Layers, MessageCircle, Sparkles, Wind } from "lucide-react";
 import Link from "next/link";
@@ -11,6 +12,12 @@ import { SITE } from "@/components/layout/site";
 import { sanityFetch } from "@/sanity/lib/live";
 
 export const revalidate = 0;
+
+export const metadata: Metadata = {
+  alternates: {
+    canonical: "/",
+  },
+};
 
 const philosophyPoints = [
   {

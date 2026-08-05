@@ -11,6 +11,9 @@ export const metadata: Metadata = {
   title: "Gallery",
   description:
     "Explore completed Micro Concrete, Limewash, Textured Finish, and Terrazzo projects by Lime Craft Collective across Delhi NCR and beyond.",
+  alternates: {
+    canonical: "/gallery",
+  },
 };
 
 interface GalleryItem {

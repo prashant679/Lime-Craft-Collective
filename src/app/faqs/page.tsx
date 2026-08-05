@@ -14,6 +14,9 @@ export const metadata: Metadata = {
   title: "FAQs",
   description:
     "Answers to common questions about micro concrete and limewash finishes — application, maintenance, cost, and service area.",
+  alternates: {
+    canonical: "/faqs",
+  },
 };
 
 const faqs = [

@@ -9,6 +9,9 @@ export const metadata: Metadata = {
   title: "Contact",
   description:
     "Get in touch with Lime Craft Collective for micro concrete, limewash, textured finishes, and terrazzo flooring — WhatsApp, email, or call. Delhi NCR & beyond.",
+  alternates: {
+    canonical: "/contact",
+  },
 };
 
 const InstagramIcon: React.FC<{ className?: string }> = ({ className = "h-4 w-4" }) => (
