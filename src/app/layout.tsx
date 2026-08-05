@@ -35,13 +35,13 @@ export const metadata: Metadata = {
   icons: {
     icon: [
       { url: "/favicon.ico", sizes: "any" },
-      { url: "/images/favicon-96x96.png", type: "image/png", sizes: "96x96" },
-      { url: "/images/favicon.svg", type: "image/svg+xml" },
+      { url: "/favicon-96x96.png", type: "image/png", sizes: "96x96" },
+      { url: "/favicon.svg", type: "image/svg+xml" },
     ],
     shortcut: { url: "/favicon.ico", type: "image/x-icon" },
-    apple: { url: "/images/apple-touch-icon.png", type: "image/png", sizes: "180x180" },
+    apple: { url: "/apple-touch-icon.png", type: "image/png", sizes: "180x180" },
   },
-  manifest: "/images/site.webmanifest",
+  manifest: "/site.webmanifest",
   openGraph: {
     title: "Lime Craft Collective — Handcrafted Luxury Textures",
     description:
