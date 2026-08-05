@@ -52,48 +52,6 @@ interface GalleryItem {
   image?: { asset?: { url?: string } };
 }
 
-const fallbackHeroImages: Record<string, string> = {
-  "micro-concrete": "/images/pdf/microtopping-cover.jpg",
-  limewash: "/images/pdf/limewash-cover.jpg",
-  "textured-finish": "/images/Textured%20Finish/hero.jpeg",
-  "terrazzo-flooring": "/images/Terrazzo/Hero.jpeg",
-};
-
-const fallbackGalleryImages: Record<string, string[]> = {
-  "micro-concrete": [
-    "/images/pdf/microtopping-cover.jpg",
-    "/images/pdf/microtopping-process.jpg",
-    "/images/pdf/texture-1.jpg",
-    "/images/pdf/texture-2.jpg",
-    "/images/pdf/benefit-2.jpg",
-    "/images/Micro%20concrete/hero.jpeg",
-  ],
-  limewash: [
-    "/images/pdf/limewash-cover.jpg",
-    "/images/pdf/philosophy.jpg",
-    "/images/pdf/texture-3.jpg",
-    "/images/pdf/benefit-1.jpg",
-    "/images/pdf/vision.jpg",
-    "/images/pdf/about.jpeg",
-  ],
-  "textured-finish": [
-    "/images/Textured%20Finish/hero.jpeg",
-    "/images/Textured%20Finish/WhatsApp%20Image%202026-08-04%20at%203.41.41%20PM.jpeg",
-    "/images/Textured%20Finish/WhatsApp%20Image%202026-08-04%20at%203.41.18%20PM%20(1).jpeg",
-    "/images/Textured%20Finish/WhatsApp%20Image%202026-08-04%20at%203.41.17%20PM.jpeg",
-    "/images/Textured%20Finish/WhatsApp%20Image%202026-08-04%20at%203.41.41%20PM1.jpeg",
-    "/images/Textured%20Finish/WhatsApp%20Image%202026-08-04%20at%203.41.17%20PM%20(1).jpeg",
-  ],
-  "terrazzo-flooring": [
-    "/images/Terrazzo/Hero.jpeg",
-    "/images/Terrazzo/sample.jpeg",
-    "/images/Terrazzo/sample2.jpeg",
-    "/images/Terrazzo/sample3.jpeg",
-    "/images/Terrazzo/sample5.jpeg",
-    "/images/Terrazzo/12.jpeg",
-  ],
-};
-
 interface ProcessStep {
   _key?: string;
   title: string;
@@ -129,14 +87,8 @@ const processSteps: Record<string, ProcessStep[]> = {
   ],
 };
 
-function resolveHeroImage(slug: string, service: ServiceDoc): string {
-  const url = service.heroImage?.asset?.url;
-  if (url) return url;
-  return (
-    fallbackHeroImages[slug.toLowerCase()] ||
-    fallbackHeroImages[service.name.toLowerCase()] ||
-    "/images/pdf/texture-1.jpg"
-  );
+function resolveHeroImage(service: ServiceDoc): string | undefined {
+  return service.heroImage?.asset?.url || undefined;
 }
 
 interface PageProps {
@@ -195,7 +147,7 @@ export default async function ServicePage({ params }: PageProps) {
   if (!service) notFound();
 
   const slugLower = slug.toLowerCase();
-  const heroImage = resolveHeroImage(slug, service);
+  const heroImage = resolveHeroImage(service);
   const whyPoints =
     service.whyPoints && service.whyPoints.length > 0
       ? service.whyPoints
@@ -216,11 +168,7 @@ export default async function ServicePage({ params }: PageProps) {
           _key: step._key ?? `step-${index}`,
         }))
       : processSteps[slugLower] ?? defaultProcess;
-  const galleryImages: GalleryItem[] = gallery.length > 0
-    ? gallery
-    : (fallbackGalleryImages[slugLower] ?? []).map((src) => ({
-        image: { asset: { url: src } },
-      }));
+  const galleryImages: GalleryItem[] = gallery;
 
   return (
     <div>

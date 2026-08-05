@@ -42,9 +42,9 @@ const philosophyPoints = [
 ];
 
 export default async function AboutPage() {
-  let heroImage = "/images/pdf/about.jpeg";
-  let whoWeAreImage = "/images/pdf/microtopping-process.jpg";
-  let visionImage = "/images/pdf/philosophy.jpg";
+  let heroImage: string | undefined = undefined;
+  let whoWeAreImage: string | undefined = undefined;
+  let visionImage: string | undefined = undefined;
 
   try {
     const data = await sanityFetch({
@@ -59,7 +59,7 @@ export default async function AboutPage() {
     if (s?.who) whoWeAreImage = s.who;
     if (s?.vision) visionImage = s.vision;
   } catch {
-    // Keep fallbacks
+    // Keep undefined
   }
 
   return (
@@ -77,15 +77,17 @@ export default async function AboutPage() {
         title="Transforming Raw Concrete into Elegant Statements"
         subtitle="Lime Craft Collective specializes in decorative concrete surfaces — micro concrete and limewash — for residential and commercial spaces. We blend luxury aesthetics with durability and cost efficiency to redefine what a surface can be."
         image={
-          <div className="relative aspect-[4/5] overflow-hidden rounded-[4px] border border-tan/60">
-            <Image
-              src={whoWeAreImage}
-              alt="Our craft in progress"
-              fill
-              sizes="(min-width: 1024px) 50vw, 100vw"
-              className="object-cover"
-            />
-          </div>
+          whoWeAreImage ? (
+            <div className="relative aspect-[4/5] overflow-hidden rounded-[4px] border border-tan/60">
+              <Image
+                src={whoWeAreImage}
+                alt="Our craft in progress"
+                fill
+                sizes="(min-width: 1024px) 50vw, 100vw"
+                className="object-cover"
+              />
+            </div>
+          ) : undefined
         }
       />
 
@@ -96,15 +98,17 @@ export default async function AboutPage() {
         title="Vision"
         subtitle="We believe concrete can be a premium design medium. Through bespoke, handcrafted surfaces, we aim to change how people see and live with an everyday material — turning the ordinary into something considered and enduring."
         image={
-          <div className="relative aspect-[4/5] overflow-hidden rounded-[4px] border border-tan/60">
-            <Image
-              src={visionImage}
-              alt="Bespoke limewash finish"
-              fill
-              sizes="(min-width: 1024px) 50vw, 100vw"
-              className="object-cover"
-            />
-          </div>
+          visionImage ? (
+            <div className="relative aspect-[4/5] overflow-hidden rounded-[4px] border border-tan/60">
+              <Image
+                src={visionImage}
+                alt="Bespoke limewash finish"
+                fill
+                sizes="(min-width: 1024px) 50vw, 100vw"
+                className="object-cover"
+              />
+            </div>
+          ) : undefined
         }
       />
 

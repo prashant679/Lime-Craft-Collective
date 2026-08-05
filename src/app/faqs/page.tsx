@@ -70,7 +70,7 @@ const faqs = [
 ];
 
 export default async function FaqsPage() {
-  let heroImage = "/images/pdf/philosophy.jpg";
+  let heroImage: string | undefined = undefined;
 
   try {
     const data = await sanityFetch({
@@ -79,7 +79,7 @@ export default async function FaqsPage() {
     const s = data.data as { hero?: string } | null;
     if (s?.hero) heroImage = s.hero;
   } catch {
-    // Keep fallback
+    heroImage = undefined;
   }
 
   return (

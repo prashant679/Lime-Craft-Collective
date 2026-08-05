@@ -26,9 +26,8 @@ export const SplitSection: React.FC<SplitSectionProps> = ({
   return (
     <section className={`py-12 sm:py-18 md:py-24 lg:py-28 ${className}`}>
       <div
-        className={`mx-auto grid max-w-7xl items-center gap-8 px-4 sm:px-6 lg:grid-cols-2 lg:gap-16 lg:px-8 ${
-          reversed ? "lg:[&>*:first-child]:order-2" : ""
-        }`}
+        className={`mx-auto grid max-w-7xl items-center gap-8 px-4 sm:px-6 lg:grid-cols-2 lg:gap-16 lg:px-8 ${reversed ? "lg:[&>*:first-child]:order-2" : ""
+          }`}
       >
         <div>{image}</div>
 

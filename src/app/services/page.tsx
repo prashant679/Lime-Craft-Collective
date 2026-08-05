@@ -28,55 +28,9 @@ interface ServiceCard {
   title: string;
   tagline: string;
   description: string;
-  image: string;
+  image?: string;
   alt: string;
 }
-
-const heroFallbacks: Record<string, string> = {
-  "micro-concrete": "/images/pdf/microtopping-cover.jpg",
-  limewash: "/images/pdf/limewash-cover.jpg",
-  "textured-finish": "/images/Textured%20Finish/hero.jpeg",
-  "terrazzo-flooring": "/images/Terrazzo/Hero.jpeg",
-};
-
-const fallbackServices: ServiceCard[] = [
-  {
-    href: "/services/micro-concrete",
-    title: "Micro Concrete",
-    tagline: "The art of minimalism",
-    description:
-      "Ultra-thin (up to 3mm) decorative concrete coatings applied over existing floors or walls. Seamless, joint-free surfaces with custom colors and textures.",
-    image: "/images/pdf/microtopping-cover.jpg",
-    alt: "Micro Concrete — seamless concrete coating",
-  },
-  {
-    href: "/services/limewash",
-    title: "Limewash",
-    tagline: "Enduring works of material art",
-    description:
-      "Pure-limestone plaster finishes rooted in Roman plasterwork heritage. Breathable, hypoallergenic and antimicrobial, with a natural antique character.",
-    image: "/images/pdf/limewash-cover.jpg",
-    alt: "Limewash — natural limestone plaster",
-  },
-  {
-    href: "/services/textured-finish",
-    title: "Textured Finish",
-    tagline: "Dimension, by hand",
-    description:
-      "Hand-applied textures that bring tactile depth to walls and floors — light and shadow do the work, without pattern or noise.",
-    image: "/images/Textured%20Finish/hero.jpeg",
-    alt: "Textured Finish — hand-applied surface",
-  },
-  {
-    href: "/services/terrazzo-flooring",
-    title: "Terrazzo Flooring",
-    tagline: "Bespoke, poured to last",
-    description:
-      "Timeless speckled elegance poured and polished with a modern, custom palette — a seamless, durable finish built to last generations.",
-    image: "/images/Terrazzo/Hero.jpeg",
-    alt: "Terrazzo — bespoke poured flooring",
-  },
-];
 
 async function getServices(): Promise<ServiceCard[]> {
   try {
@@ -92,7 +46,6 @@ async function getServices(): Promise<ServiceCard[]> {
     const docs = ((data.data ?? []) as ServiceDoc[]).filter(
       (doc) => doc.slug?.current,
     );
-    if (docs.length === 0) return fallbackServices;
     return docs.map((doc) => {
       const slug = doc.slug!.current!;
       return {
@@ -100,18 +53,18 @@ async function getServices(): Promise<ServiceCard[]> {
         title: doc.name,
         tagline: "Handcrafted for your space",
         description: doc.shortDescription || doc.name,
-        image: doc.heroImage?.asset?.url || heroFallbacks[slug] || "/images/pdf/texture-1.jpg",
+        image: doc.heroImage?.asset?.url || undefined,
         alt: `${doc.name} — handcrafted surface`,
       };
     });
   } catch {
-    return fallbackServices;
+    return [];
   }
 }
 
 export default async function ServicesPage() {
   const services = await getServices();
-  let heroImage = "/images/pdf/texture-2.jpg";
+  let heroImage: string | undefined = undefined;
 
   try {
     const data = await sanityFetch({
@@ -120,7 +73,7 @@ export default async function ServicesPage() {
     const s = data.data as { hero?: string } | null;
     if (s?.hero) heroImage = s.hero;
   } catch {
-    // Keep fallback
+    heroImage = undefined;
   }
 
   return (
@@ -137,19 +90,23 @@ export default async function ServicesPage() {
           {services.map((service, idx) => (
             <div
               key={service.href}
-              className={`grid items-center gap-10 lg:grid-cols-2 lg:gap-16 ${
-                idx % 2 === 1 ? "lg:[&>*:first-child]:order-2" : ""
+              className={`grid items-center gap-10 ${
+                service.image ? "lg:grid-cols-2 lg:gap-16" : ""
+              } ${
+                idx % 2 === 1 && service.image ? "lg:[&>*:first-child]:order-2" : ""
               }`}
             >
-              <div className="relative aspect-[3/2] overflow-hidden rounded-[4px] border border-tan/60">
-                <Image
-                  src={service.image}
-                  alt={service.alt}
-                  fill
-                  sizes="(min-width: 1024px) 50vw, 100vw"
-                  className="object-cover"
-                />
-              </div>
+              {service.image && (
+                <div className="relative aspect-[3/2] overflow-hidden rounded-[4px] border border-tan/60">
+                  <Image
+                    src={service.image}
+                    alt={service.alt}
+                    fill
+                    sizes="(min-width: 1024px) 50vw, 100vw"
+                    className="object-cover"
+                  />
+                </div>
+              )}
               <div>
                 <span className="text-xs font-semibold uppercase tracking-[0.25em] text-terracotta">
                   {service.tagline}
