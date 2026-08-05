@@ -15,7 +15,7 @@ interface FormState {
 const initialForm: FormState = { name: "", email: "", phone: "", message: "" };
 
 const inputClasses =
-  "w-full max-w-full rounded-[4px] border border-tan/70 bg-white/70 px-4 py-3 text-sm text-ink placeholder:text-muted/70 transition-colors focus:border-terracotta focus:outline-none focus:ring-2 focus:ring-terracotta/30";
+  "w-full max-w-full rounded-lg border border-tan/70 bg-white/70 px-4 py-3 text-sm text-ink placeholder:text-muted/70 transition-colors focus:border-terracotta focus:outline-none focus:ring-2 focus:ring-terracotta/30";
 
 export const ContactForm: React.FC = () => {
   const [form, setForm] = useState<FormState>(initialForm);
@@ -42,7 +42,7 @@ Message: ${form.message.trim()}`;
   return (
     <form
       onSubmit={handleSubmit}
-      className="w-full max-w-full overflow-hidden rounded-[4px] border border-tan/60 bg-white/70 p-5 sm:p-8 md:p-10"
+      className="w-full max-w-full overflow-hidden rounded-2xl border border-tan/60 bg-white/70 p-5 sm:p-8 md:p-10"
     >
       <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
         <div>

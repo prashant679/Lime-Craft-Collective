@@ -22,7 +22,10 @@ export const viewport: Viewport = {
   maximumScale: 5,
 };
 
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://limecraftcollective.com";
+
 export const metadata: Metadata = {
+  metadataBase: new URL(siteUrl),
   title: {
     default: "Lime Craft Collective — Handcrafted Luxury Textures",
     template: "%s | Lime Craft Collective",
@@ -31,13 +34,29 @@ export const metadata: Metadata = {
     "Transforming raw concrete into elegant architectural statements. Premium micro concrete, limewash plasterwork, and bespoke surfaces for residential and commercial spaces.",
   icons: {
     icon: [
+      { url: "/favicon.ico", sizes: "any" },
       { url: "/images/favicon-96x96.png", type: "image/png", sizes: "96x96" },
       { url: "/images/favicon.svg", type: "image/svg+xml" },
     ],
-    shortcut: { url: "/images/favicon.ico", type: "image/x-icon" },
+    shortcut: { url: "/favicon.ico", type: "image/x-icon" },
     apple: { url: "/images/apple-touch-icon.png", type: "image/png", sizes: "180x180" },
   },
   manifest: "/images/site.webmanifest",
+  openGraph: {
+    title: "Lime Craft Collective — Handcrafted Luxury Textures",
+    description:
+      "Transforming raw concrete into elegant architectural statements. Premium micro concrete, limewash plasterwork, and bespoke surfaces for residential and commercial spaces.",
+    url: siteUrl,
+    siteName: "Lime Craft Collective",
+    locale: "en_US",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Lime Craft Collective — Handcrafted Luxury Textures",
+    description:
+      "Transforming raw concrete into elegant architectural statements.",
+  },
   appleWebApp: {
     title: "Limecraft",
   },

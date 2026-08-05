@@ -97,7 +97,7 @@ export default async function ServicesPage() {
               }`}
             >
               {service.image && (
-                <div className="relative aspect-[3/2] overflow-hidden rounded-[4px] border border-tan/60">
+                <div className="relative aspect-[3/2] overflow-hidden rounded-2xl border border-tan/60 shadow-xs">
                   <Image
                     src={service.image}
                     alt={service.alt}

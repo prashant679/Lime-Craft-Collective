@@ -233,7 +233,7 @@ export default async function Home() {
         subtitle="We blend luxury aesthetics with durability and cost efficiency to redefine what a surface can be. Every project is an opportunity to turn an everyday material into a quiet piece of craftsmanship."
         image={
           homeAboutImage ? (
-            <div className="relative aspect-[4/5] overflow-hidden rounded-[4px] border border-tan/60">
+            <div className="relative aspect-[4/5] overflow-hidden rounded-2xl border border-tan/60 shadow-xs">
               <Image
                 src={homeAboutImage}
                 alt="Micro Concrete finish in progress"
@@ -281,7 +281,7 @@ export default async function Home() {
                 <Link
                   key={service.title}
                   href={service.href}
-                  className="group flex flex-col overflow-hidden rounded-[4px] border border-tan/60 bg-white/60 transition-all duration-300 hover:-translate-y-1 hover:border-terracotta/50 hover:shadow-md"
+                  className="group flex flex-col overflow-hidden rounded-2xl border border-tan/60 bg-white/60 transition-all duration-300 hover:-translate-y-1 hover:border-terracotta/50 hover:shadow-md"
                 >
                   <div className="relative aspect-[3/2] overflow-hidden">
                     {service.image ? (
@@ -329,7 +329,7 @@ export default async function Home() {
             {benefitList.map((benefit) => (
               <div
                 key={benefit.title}
-                className="group overflow-hidden rounded-[4px] border border-tan/60 bg-white/60 transition-all duration-300 hover:-translate-y-1 hover:shadow-md"
+                className="group overflow-hidden rounded-2xl border border-tan/60 bg-white/60 transition-all duration-300 hover:-translate-y-1 hover:shadow-md"
               >
                 {benefit.image && (
                   <div className="relative aspect-[3/2] overflow-hidden">
@@ -370,7 +370,7 @@ export default async function Home() {
             {recentGallery.map((item, idx) => (
               <li
                 key={idx}
-                className="group relative aspect-[3/2] overflow-hidden rounded-[4px] border border-tan/60 transition-all duration-300 hover:-translate-y-1 hover:shadow-md"
+                className="group relative aspect-[3/2] overflow-hidden rounded-2xl border border-tan/60 transition-all duration-300 hover:-translate-y-1 hover:shadow-md"
               >
                 <Link href="/gallery" aria-label={`View ${item.caption} in the gallery`}>
                   <Image

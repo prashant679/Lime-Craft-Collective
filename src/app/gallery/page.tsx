@@ -76,7 +76,7 @@ export default async function GalleryPage() {
               {galleryItems.map((item, idx) => (
                 <li
                   key={idx}
-                  className="group relative overflow-hidden rounded-[4px] border border-tan/60 transition-all duration-300 hover:-translate-y-1 hover:shadow-md"
+                  className="group relative overflow-hidden rounded-2xl border border-tan/60 transition-all duration-300 hover:-translate-y-1 hover:shadow-md"
                 >
                   <div className="relative aspect-[3/2]">
                     <Image

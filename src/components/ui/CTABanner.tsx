@@ -14,7 +14,7 @@ export const CTABanner: React.FC<CTABannerProps> = ({
   return (
     <section className="py-12 sm:py-20 md:py-28">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="rounded-[4px] border border-tan/60 bg-white/60 px-5 py-10 text-center shadow-xs sm:px-12 md:py-20">
+        <div className="rounded-2xl border border-tan/60 bg-white/60 px-5 py-10 text-center shadow-xs sm:px-12 md:py-20">
           <h2 className="mx-auto max-w-2xl font-serif text-2xl font-bold leading-tight tracking-tight text-ink sm:text-4xl">
             {title}
           </h2>

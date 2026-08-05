@@ -78,7 +78,7 @@ export default async function AboutPage() {
         subtitle="Lime Craft Collective specializes in decorative concrete surfaces — micro concrete and limewash — for residential and commercial spaces. We blend luxury aesthetics with durability and cost efficiency to redefine what a surface can be."
         image={
           whoWeAreImage ? (
-            <div className="relative aspect-[4/5] overflow-hidden rounded-[4px] border border-tan/60">
+            <div className="relative aspect-[4/5] overflow-hidden rounded-2xl border border-tan/60 shadow-xs">
               <Image
                 src={whoWeAreImage}
                 alt="Our craft in progress"
@@ -99,7 +99,7 @@ export default async function AboutPage() {
         subtitle="We believe concrete can be a premium design medium. Through bespoke, handcrafted surfaces, we aim to change how people see and live with an everyday material — turning the ordinary into something considered and enduring."
         image={
           visionImage ? (
-            <div className="relative aspect-[4/5] overflow-hidden rounded-[4px] border border-tan/60">
+            <div className="relative aspect-[4/5] overflow-hidden rounded-2xl border border-tan/60 shadow-xs">
               <Image
                 src={visionImage}
                 alt="Bespoke limewash finish"
