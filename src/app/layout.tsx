@@ -1,10 +1,8 @@
 import type { Metadata, Viewport } from "next";
 import { Fraunces, Inter } from "next/font/google";
 import "./globals.css";
-import { Navbar } from "@/components/layout/Navbar";
-import { Footer } from "@/components/layout/Footer";
-import { MobileFloatingCTA } from "@/components/ui/MobileFloatingCTA";
-import { sanityFetch } from "@/sanity/lib/live";
+import { sanityFetch, SanityLive } from "@/sanity/lib/live";
+import { LayoutWrapper } from "@/components/layout/LayoutWrapper";
 
 const fraunces = Fraunces({
   variable: "--font-fraunces",
@@ -67,18 +65,8 @@ export default async function RootLayout({
       className={`${fraunces.variable} ${inter.variable} h-full antialiased`}
     >
       <body className="flex min-h-full flex-col bg-cream font-sans text-ink selection:bg-terracotta/20 selection:text-terracotta">
-        <a
-          href="#main"
-          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[60] focus:bg-terracotta focus:px-4 focus:py-2 focus:text-cream"
-        >
-          Skip to content
-        </a>
-        <Navbar logoUrl={logoUrl} />
-        <main id="main" className="flex-1">
-          {children}
-        </main>
-        <Footer logoUrl={logoUrl} />
-        <MobileFloatingCTA />
+        <LayoutWrapper logoUrl={logoUrl}>{children}</LayoutWrapper>
+        <SanityLive />
       </body>
     </html>
   );

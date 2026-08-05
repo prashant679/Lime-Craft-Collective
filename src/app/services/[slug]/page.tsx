@@ -10,7 +10,7 @@ import { SITE } from "@/components/layout/site";
 import { Button } from "@/components/ui/Button";
 import { sanityFetch } from "@/sanity/lib/live";
 
-export const revalidate = 60;
+export const revalidate = 0;
 
 const serviceQuery = `*[_type == "service" && slug.current == $slug][0]{
   _id,

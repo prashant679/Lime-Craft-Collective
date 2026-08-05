@@ -5,6 +5,8 @@ import { PageHero } from "@/components/ui/PageHero";
 import { CTABanner } from "@/components/ui/CTABanner";
 import { sanityFetch } from "@/sanity/lib/live";
 
+export const revalidate = 0;
+
 export const metadata: Metadata = {
   title: "Gallery",
   description:

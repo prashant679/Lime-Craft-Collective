@@ -10,6 +10,8 @@ import { CTABanner } from "@/components/ui/CTABanner";
 import { SITE } from "@/components/layout/site";
 import { sanityFetch } from "@/sanity/lib/live";
 
+export const revalidate = 0;
+
 const philosophyPoints = [
   {
     title: "Environmentally Responsible Materials",

@@ -13,12 +13,25 @@ import {apiVersion, dataset, projectId} from './src/sanity/env'
 import {schema} from './src/sanity/schemaTypes'
 import {structure} from './src/sanity/structure'
 
+import {CustomDeleteAction} from './src/sanity/actions/deleteAction'
+import {PublishAllTool} from './src/sanity/tools/publishAllTool'
+import {RocketIcon} from '@sanity/icons'
+
 export default defineConfig({
   basePath: '/studio',
   projectId,
   dataset,
   // Add and edit the content schema in the './sanity/schemaTypes' folder
   schema,
+  tools: (prev) => [
+    ...prev,
+    {
+      name: 'publish-all',
+      title: 'Publish All',
+      icon: RocketIcon,
+      component: PublishAllTool,
+    },
+  ],
   plugins: [
     structureTool({structure}),
     // Vision is for querying with GROQ from inside the Studio
@@ -26,14 +39,15 @@ export default defineConfig({
     visionTool({defaultApiVersion: apiVersion}),
   ],
   document: {
-    // For singletons like siteSettings, keep publish and discard changes actions clean
+    // Custom actions for document types in Studio
     actions: (input, context) => {
       if (context.schemaType === 'siteSettings') {
         return input.filter(
           ({ action }) => action && ['publish', 'discardChanges', 'restore'].includes(action)
         )
       }
-      return input
+      // Add custom primary Delete button for all editable content documents
+      return [...input, CustomDeleteAction]
     },
     // Hide singletons from global "Create New" options
     newDocumentOptions: (action, { creationContext }) => {

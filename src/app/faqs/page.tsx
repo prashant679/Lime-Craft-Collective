@@ -8,6 +8,8 @@ import { Button } from "@/components/ui/Button";
 
 import { sanityFetch } from "@/sanity/lib/live";
 
+export const revalidate = 0;
+
 export const metadata: Metadata = {
   title: "FAQs",
   description:
